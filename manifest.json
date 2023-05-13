@@ -1,0 +1,63 @@
+{
+  "format_version": 1,
+  "header": {
+    "description": "Api for minecraft",
+    "name": "Zxra §4§lApi",
+    "uuid": "dfbbd51f-3177-422b-80e7-111fb105ad65",
+    "version": [
+      0,
+      3,
+      2
+    ],
+    "min_engine_version": [
+      1,
+      8,
+      0
+    ]
+  },
+  "dependencies": [
+    {
+      "uuid": "0cc3aa3b-76b3-43bc-96e2-226e05067fdf",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.2.0-beta"
+    },
+    {
+      "module_name": "@minecraft/server-gametest",
+      "version": "1.0.0-beta"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "1.0.0-beta"
+    }
+  ],
+  "modules": [
+    {
+      "description": "Zxra Api",
+      "type": "data",
+      "uuid": "8b8d2a0b-a206-4f0a-908c-718e5f7b611a",
+      "version": [
+        0,
+        3,
+        2
+      ]
+    },
+    {
+      "type": "script",
+      "language": "javascript",
+      "uuid": "ad31a838-4958-4542-a8f8-c7014860d578",
+      "entry": "scripts/main.js",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ]
+}

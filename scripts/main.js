@@ -1,9 +1,11 @@
 import { Player, world, system, Scoreboard, DynamicPropertiesDefinition, MinecraftEntityTypes } from "@minecraft/server";
-import { MessageFormData } from "@minecraft/server-ui"
+import { MessageFormData } from "@minecraft/server-ui";
+import * as cmd from "./cmd.js";
 let worldNotif = false;
 
 // CrzxaExe3
-// Jangan ganti sembarangan code dibawah ini kecuali yg udah gw kasih keterangan
+// [ID] Jangan sembarangan mengubah kode dibawah ini kecuali saya sudah memberikan keterangannya
+// [EN] Don't change the code below carelessly unless I've given you a description
 world.events.worldInitialize.subscribe((event) => {
     const propertiDefinition = new DynamicPropertiesDefinition();
 });
@@ -11,13 +13,16 @@ world.events.worldInitialize.subscribe((event) => {
 world.events.beforeChat.subscribe(async (event) => {
     const commandTag = "+";
     const pesan = event.message;
+    let msg = pesan.split(" ");
     const sender = event.sender;
     if (pesan.startsWith(commandTag)) {
-        switch (pesan) {
+        switch (msg[0]) {
             case `+help`:
                 let helps = "§7All commands: "
-                cmd.forEach((data) => {
-                	helps += `\n§7+${data.name} - ${data.description}`
+                cmd.cmd.forEach((data) => {
+                	if(data.done == false) {
+                	 helps += `\n§4+${data.name} - ${data.description} [Not Done]`
+                    } else helps += `\n§7+${data.name} - ${data.description}`
                 })
                 sender.sendMessage(helps);
                 break;
@@ -66,10 +71,22 @@ world.events.beforeChat.subscribe(async (event) => {
                  }).catch(e => {
                  	console.warn(e, e.stack)
                  })
-                }, 2)
+                }, 3)
                 break;
-            default:
-                sender.sendMessage("§4Please type +help for see all command");
+            case `+rank`:
+                if(msg[1] == "check") {
+                  if (Object.keys(Tags).includes(sender.getTags()[0])) {
+                  	sender.sendMessage(`There is a rank on you ${sender.getTags()[0]}`)
+                  } else sender.sendMessage("§7There is no rank with in you")
+                } else if(msg[1] == "list") {
+                  let rankList = "List of rank:"
+                  Object.keys(Tags).forEach(data => {
+                	rankList += `\n- [${Color(Tags[data])}${data}§r]`
+                   })
+                   sender.sendMessage(rankList)
+                } else sender.sendMessage("Rank subcommand list\n- check\n- list")
+                break;
+            default: sender.sendMessage("§4Please type +help for see all command");
         }
     } else {
     let Rank = sender.getTags();
@@ -113,82 +130,64 @@ world.events.beforeItemUse.subscribe(event => {
 
 function Color(name) {
 	if (name.startsWith("§")) return name
-    // Warna yg tersedia tapi bisa aja langsung pake §
+    // [ID] Warna yg tersedia tapi bisa aja langsung pake §
+    // [EN] Available colors but you can use it directly §
 	var colour = {
 	 "green": "§2",
 	 "bold_green": "§2§l",
-	 "red": "§4",
-	 "bold_red": "§4§l",
+	 "dark_red": "§4",
+	 "bold__dark_red": "§4§l",
+	 "red": "§c",
+	 "bold_red": "§c§l",
 	 "cyan": "§b",
 	 "bold_cyan": "§b§l",
 	 "indigo": "§3",
 	 "bold_indigo": "§3§l",
 	 "purple": "§5",
 	 "bold_purple": "§5§l",
-	 "blue": "§1",
-	 "bold_blue": "§1§l",
+	 "light_purple": "§d",
+	 "bold_light_purple": "§d§l",
+	 "dark_blue": "§1",
+	 "bold_dark_blue": "§1§l",
+	 "blue": "§9",
+	 "bold_blue": "§9§l",
 	 "orange": "§6",
 	 "bold_orange": "§6§l",
 	 "yellow": "§e",
 	 "bold_yellow": "§e§l",
-	 "light_grey": "§7",
-	 "bold_light_grey": "§7§l"
+	 "gold": "§g",
+	 "bold_gold": "§g§l",
+	 "grey": "§7",
+	 "bold_grey": "§7§l",
+	 "dark_grey": "§8",
+	 "bold_dark_grey": "§8§l",
+	 "white": "§f",
+	 "bold_white": "§f§l",
+	 "obfuscated": "§k"
 	}
 	return name = colour[name]
 }
 
 let warning = new MessageFormData()
-.title("Block placed warning")
-.body("That item are banned when used in here")
+.title("Block placed warning")// Judul warning - Warning title
+.body("That item are banned when used in here")// Isi warning - Warning description
 .button1("Ok")
 .button2("Ok")
 
 let rules = new MessageFormData()
-.title("Rules")//Judul rules
-.body("You must follow this rule if you don't wanna got banned\n1. No cheating\n2. No Toolbox\n3. No grief\n4. No glitching")// isi rules
-.button1("Yess Sir")// button yg atas
-.button2("Okeh")// button yg bawah
+.title("Rules")// Judul rules - Rules title
+.body("You must follow this rule if you don't wanna got banned\n1. No cheating\n2. No Toolbox\n3. No grief\n4. No glitching")// isi rules - Rules description
+.button1("Yess Sir")// Button yg atas - Button top
+.button2("Okeh")// Button yg bawah - Button bottom
 
-// Kebanyakan di sini boleh diganti
-// Bisa ditambahkan aja itu tag apa aja biar chatnya beda
+// [ID] Kebanyakan di sini boleh diganti atau di tambahkan
+// >>>> Bisa ditambahkan aja itu tag apa aja biar chatnya beda
+// [EN] Most here can be replaced or be added new
+// >>>> Most of them here can be changed. Can you add any tags so that the chat is different
 var Tags = {
  "Admin": "green",
  "Zxra": "§b§l",
  "Owner": "bold_purple"
 }
 
-// Ini bagian daftar custom command
-var cmd = [
- {
-   "name": "balance",
-   "description": "See your balance(not done yeet)"
- },
- {
-   "name": "buy",
-   "description": "Buy some item in the shop(not done yeet)"
- },
- {
-   "name": "gmc",
-   "description": "Change your gamemode to Creative"
- },
- {
-   "name": "gms",
-   "description": "Change your gamemode to Survival"
- },
- {
-   "name": "help",
-   "description": "See all command that works"
- },
- {
-   "name": "home",
-   "description": "Teleport to your home but delay"
- },
- {
-   "name": "rules",
-   "description": "See rules this world"
- },
- {
-   "name": "tags",
-   "description": "See all tags that you have"
- }
-]
+// Custom command list on "cmd.js"

@@ -1,13 +1,11 @@
 export var cmd = [
  {
    "name": "balance",
-   "description": "See your balance",
-   "done": false
+   "description": "See your balance"
  },
  {
    "name": "buy",
-   "description": "Buy some item in the shop",
-   "done": false
+   "description": "Buy some item in the shop"
  },
  {
    "name": "gmc",
@@ -26,6 +24,10 @@ export var cmd = [
    "description": "Teleport to your home but delay"
  },
  {
+   "name": "menu",
+   "description": "Display menu ui"
+ },
+ {
    "name": "rank",
    "description": "Rank command"
  },
@@ -34,7 +36,12 @@ export var cmd = [
    "description": "See rules this world"
  },
  {
+   "name": "shop",
+   "description": "See the item that you can buy from +buy"
+ },
+ {
    "name": "tags",
    "description": "See all tags that you have"
  }
 ]
+// CrzxaExe3

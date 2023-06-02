@@ -32,16 +32,8 @@ export var cmd = [
    "description": "Rank command"
  },
  {
-   "name": "rules",
-   "description": "See rules this world"
- },
- {
    "name": "shop",
    "description": "See the item that you can buy from +buy"
- },
- {
-   "name": "tags",
-   "description": "See all tags that you have"
  }
 ]
 // CrzxaExe3

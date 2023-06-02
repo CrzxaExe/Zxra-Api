@@ -1,0 +1,30 @@
+{
+  "format_version": "1.16.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "cz:config_loader",
+      "is_summonable": true
+    },
+    "component_groups": {
+      "set_despawn": {
+        "minecraft:instant_despawn": {}
+      }
+    },
+    "components": {
+      "minecraft:physics": {
+        "has_gravity": false,
+        "has_collision": false
+      }
+    },
+    "events": {
+      "load_quest": {},
+      "load_complete": {
+        "add": {
+          "component_groups": [
+            "set_despawn"
+          ]
+        }
+      }
+    }
+  }
+}
